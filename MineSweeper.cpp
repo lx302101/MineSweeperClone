@@ -166,9 +166,13 @@ class Board {
         }
     }
 
-    void printScore() {
+    void printScore(bool &isGame) {
             std::cout << "Number of Flags: " << flagScore << std::endl;
             std::cout << "Score: " << score << std::endl;
+            if (score == N*N - Bomb + 1) {
+                std::cout << "You win!" << std::endl;
+                isGame = false;
+            }
     }
     
     void firstMove() {
@@ -193,10 +197,10 @@ class Board {
 class Cell {
     public:
         Cell() {}
-        void setCell(Board board, int size) {
+        void setCell(Board board) {
             std::cout << "Enter your move (row coloumn) (only use numbers seperated by space):" << std::endl;
             std::cin >> x >> y;
-            while (x<1 || x>size || y<1 || y>size) {
+            while (x<1 || x>N || y<1 || y>N) {
                 std::cout << "Invalid input. Input again:" << std::endl;
                 std::cin >> x >> y;
             } 
@@ -304,12 +308,13 @@ int main() {
         cell1.userTask(isGame);
         cell1.copyBoard(board1);
         board1.printBoard();
-        board1.printScore();
+        board1.printScore(isGame);
         cell1.~Cell();
     }
 
 
     board1.printAnsBoard();
+    std::cout << "9 is where the bomb is" << std::endl;
 
     return 0;
 }
