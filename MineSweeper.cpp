@@ -11,8 +11,8 @@ class Board {
     Board() {
         for (int i=0; i<N; ++i) { 
             for (int j=0; j<N; ++j) {
-                array1[i][j] = '*';
-                array2[i][j] = 0;
+                displayBoard[i][j] = '*';
+                ansBoard[i][j] = 0;
             }
         }
         flagScore = 0;
@@ -22,7 +22,7 @@ class Board {
     void printBoard() {
         for (int i=0; i<N; ++i) {
             for (int j=0; j<N; ++j) {
-                std::cout << array1[i][j] << " ";
+                std::cout << displayBoard[i][j] << " ";
             }
             std::cout << std::endl;
         }
@@ -31,7 +31,7 @@ class Board {
     void printAnsBoard() {
         for (int i=0; i<N; ++i) {
             for (int j=0; j<N; ++j) {
-                std::cout << array2[i][j] << " ";
+                std::cout << ansBoard[i][j] << " ";
             }
             std::cout << std::endl;
         }
@@ -42,126 +42,126 @@ class Board {
             srand(time(0));
             int t = rand() % N;
             int x = rand() % N;
-            while (array2[t][x] == B) {
+            while (ansBoard[t][x] == B) {
                 t = rand() % N;
                 x = rand() % N;
             }
-            array2[t][x] = B;
+            ansBoard[t][x] = B;
         }
     }
 
     void findAdj() {
             for (int i=0; i<N; ++i) {
                 for (int j=0; j<N; ++j) {
-                    if (array2[i][j] == B) {
+                    if (ansBoard[i][j] == B) {
                         continue;
                     }
                     int count = 0;
-                    if ((i == 0 && j == N-1) || (i == 0 && j == 0) || (i== N-1 && j == 0) || (i == N-1 && j == N-1)) {
+                    if ((i == 0 && j == N-1) || (i == 0 && j == 0) || (i== N-1 && j == 0) || (i == N-1 && j == N-1)) { //if not side or corner
                         if (i == 0 && j == N-1) {
-                            if (array2[i+1][j] == B) 
+                            if (ansBoard[i+1][j] == B) 
                                 ++count;
-                            if (array2[i][j-1] == B)
+                            if (ansBoard[i][j-1] == B)
                                 ++count;
-                            if (array2[i+1][j-1] == B)
+                            if (ansBoard[i+1][j-1] == B)
                                 ++count;
                         } else if (i == 0 && j == 0) {
-                            if (array2[i+1][j] == B) 
+                            if (ansBoard[i+1][j] == B) 
                                 ++count;
-                            if (array2[i][j+1] == B)
+                            if (ansBoard[i][j+1] == B)
                                 ++count;
-                            if (array2[i+1][j+1] == B)
+                            if (ansBoard[i+1][j+1] == B)
                                 ++count;
                         } else if (i== N-1 && j == 0) {
-                            if (array2[i-1][j] == B) 
+                            if (ansBoard[i-1][j] == B) 
                                 ++count;
-                            if (array2[i][j+1] == B)
+                            if (ansBoard[i][j+1] == B)
                                 ++count;
-                            if (array2[i-1][j+1] == B)
+                            if (ansBoard[i-1][j+1] == B)
                                 ++count;
                         } else if (i == N-1 && j == N-1) {
-                            if (array2[i-1][j] == B) 
+                            if (ansBoard[i-1][j] == B) 
                                 ++count;
-                            if (array2[i][j-1] == B)
+                            if (ansBoard[i][j-1] == B)
                                 ++count;
-                            if (array2[i-1][j-1] == B)
+                            if (ansBoard[i-1][j-1] == B)
                                 ++count;
                         }
-                    } else if (i == 0 || j == 0 || i == N-1 || j == N-1) {
+                    } else if (i == 0 || j == 0 || i == N-1 || j == N-1) { //if side
                         switch(i) {
                             case 0:
-                                if (array2[i][j-1] == B)
+                                if (ansBoard[i][j-1] == B)
                                     ++count;
-                                if (array2[i][j+1] == B)
+                                if (ansBoard[i][j+1] == B)
                                     ++count;
-                                if (array2[i+1][j-1] == B)
+                                if (ansBoard[i+1][j-1] == B)
                                     ++count;
-                                if (array2[i+1][j] == B)
+                                if (ansBoard[i+1][j] == B)
                                     ++count;
-                                if (array2[i+1][j+1] == B)
+                                if (ansBoard[i+1][j+1] == B)
                                     ++count;
                                 break;
 
                             case N-1:
-                                if (array2[i][j-1] == B)
+                                if (ansBoard[i][j-1] == B)
                                     ++count;
-                                if (array2[i][j+1] == B)
+                                if (ansBoard[i][j+1] == B)
                                     ++count;
-                                if (array2[i-1][j-1] == B)
+                                if (ansBoard[i-1][j-1] == B)
                                     ++count;
-                                if (array2[i-1][j] == B)
+                                if (ansBoard[i-1][j] == B)
                                     ++count;
-                                if (array2[i-1][j+1] == B)
+                                if (ansBoard[i-1][j+1] == B)
                                     ++count;
                                 break;
                         }
 
-                        switch(j) {
+                        switch(j) { 
                             case 0:
-                            if (array2[i+1][j] == B)
+                            if (ansBoard[i+1][j] == B)
                                     ++count;
-                                if (array2[i-1][j] == B)
+                                if (ansBoard[i-1][j] == B)
                                     ++count;
-                                if (array2[i-1][j+1] == B)
+                                if (ansBoard[i-1][j+1] == B)
                                     ++count;
-                                if (array2[i][j+1] == B)
+                                if (ansBoard[i][j+1] == B)
                                     ++count;
-                                if (array2[i+1][j+1] == B)
+                                if (ansBoard[i+1][j+1] == B)
                                     ++count;
                                 break;
 
                             case N-1:
-                            if (array2[i+1][j] == B)
+                            if (ansBoard[i+1][j] == B)
                                     ++count;
-                                if (array2[i-1][j] == B)
+                                if (ansBoard[i-1][j] == B)
                                     ++count;
-                                if (array2[i-1][j-1] == B)
+                                if (ansBoard[i-1][j-1] == B)
                                     ++count;
-                                if (array2[i][j-1] == B)
+                                if (ansBoard[i][j-1] == B)
                                     ++count;
-                                if (array2[i+1][j-1] == B)
+                                if (ansBoard[i+1][j-1] == B)
                                     ++count;
                                 break;
                         }
 
-                } else {
+                } else { //if corner
                     for (int p = j-1; p<j+2; ++p) {
-                        if (array2[i+1][p] == B) 
+                        if (ansBoard[i+1][p] == B) 
                             ++count;
                     }
 
                     for (int p = j-1; p<j+2; ++p) {
-                        if (array2[i-1][p] == B) 
+                        if (ansBoard[i-1][p] == B) 
                             ++count;
                     }
 
-                    if (array2[i][j+1] == B) 
+                    if (ansBoard[i][j+1] == B) 
                         ++count;
 
-                    if (array2[i][j-1] == B) 
+                    if (ansBoard[i][j-1] == B) 
                         ++count;
                 }
-                array2[i][j] = count;
+                ansBoard[i][j] = count;
             }
         }
     }
@@ -178,16 +178,16 @@ class Board {
     void firstMove() {
         for (int i=0; i<N; ++i) {
             for (int j=0; j<N; ++j) {
-                if (array2[i][j] == 0) {
-                    array1[i][j] == '0';
+                if (ansBoard[i][j] == 0) {
+                    displayBoard[i][j] == '0';
                     break;
                 }
             }
         }
     }
 
-    char array1[N][N];
-    int array2[N][N];
+    char displayBoard[N][N];
+    int ansBoard[N][N];
 
     int flagScore, score;
 
@@ -208,8 +208,8 @@ class Cell {
             x -= 1;
             y -= 1;
 
-            display = board.array1[x][y];
-            ans = board.array2[x][y];
+            display = board.displayBoard[x][y];
+            ans = board.ansBoard[x][y];
 
             while (display != '*' && display != 'F') {
                 std::cout << "This is already revealed. Input again:" << std::endl;
@@ -220,8 +220,8 @@ class Cell {
 
             flags = 0;
             reveal = 0;
-            display = board.array1[x][y];
-            ans = board.array2[x][y];
+            display = board.displayBoard[x][y];
+            ans = board.ansBoard[x][y];
         }
 
         ~Cell() {}
@@ -276,8 +276,8 @@ class Cell {
             }
         }
 
-        void copyBoard(Board &board1) {
-            board1.array1[x][y] = display;
+        void copyBoard(Board &board1) { //Copy scores to board
+            board1.displayBoard[x][y] = display;
             board1.flagScore += flags;
             board1.score += reveal;
         } 
